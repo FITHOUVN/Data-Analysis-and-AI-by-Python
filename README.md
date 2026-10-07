@@ -6,7 +6,7 @@ Khoa Công nghệ thông tin, Trường Đại học Mở Hà Nội.
 Chủ biên: TS. Đinh Tuấn Long. Tham gia biên soạn: ThS. Lê Ngọc An, CN. Nguyễn Đình Dũng, CN. Ngọ Văn Sơn.
 
 > **Sách đang trong quá trình biên soạn.** Mã nguồn của từng chương được bổ sung dần, sau khi chương
-> đó đã viết xong và qua rà soát. Hiện có mã của **chương 1 và chương 2**.
+> đó đã viết xong và qua rà soát. Hiện có mã của **chương 1, 2 và 3**.
 
 ## Kho này có gì
 
