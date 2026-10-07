@@ -1,0 +1,11 @@
+# Moi truong ao va file tam cua Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# File tam cua he dieu hanh va trinh soan thao
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
