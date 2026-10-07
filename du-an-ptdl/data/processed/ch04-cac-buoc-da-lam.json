@@ -1,0 +1,33 @@
+{
+  "nguon": "data/processed/du-lieu-sach.csv (3012 dòng, 19 cột, 0 ô thiếu)",
+  "dac_trung_so": [
+    "so_lan_dang_nhap",
+    "tong_thoi_luong_phut",
+    "ty_le_hoan_thanh_video",
+    "so_bai_tap_nop",
+    "diem_tb_bai_tap",
+    "so_lan_dien_dan",
+    "nop_tre_tb_gio",
+    "diem_giua_ky"
+  ],
+  "dac_trung_phan_loai": [
+    "nganh",
+    "gioi_tinh",
+    "nhom_tuoi",
+    "vua_lam_vua_hoc",
+    "hinh_thuc_hoc",
+    "thiet_bi_chinh"
+  ],
+  "cot_bo_khoi_dac_trung": {
+    "ma_sv": "định danh, 3000 giá trị khác nhau, 595/601 mã của tập kiểm tra là mã lạ",
+    "ngay_dang_ky": "chỉ 2 tháng khác nhau, không mang thông tin phân biệt",
+    "tinh_thanh": "16 mức, thêm 16 cột mà R2 giảm 0,0019",
+    "ket_qua": "suy ra trực tiếp từ diem_cuoi_ky bằng ngưỡng 4,0; là mục tiêu của Chương 6"
+  },
+  "muc_tieu_hoi_quy": "diem_cuoi_ky",
+  "muc_tieu_phan_loai": "ket_qua",
+  "chia_tap": "train_test_split(test_size=0.2, random_state=42)",
+  "chuan_hoa": "StandardScaler cho 8 cột số, khớp chỉ trên tập huấn luyện",
+  "ma_hoa": "OneHotEncoder(handle_unknown='ignore', sparse_output=False) cho 6 cột phân loại",
+  "dong_trung_vuot_bien": "6 dòng tập kiểm tra có bản sinh đôi trong tập huấn luyện"
+}

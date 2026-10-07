@@ -56,7 +56,7 @@ Get-ChildItem code\*.py | ForEach-Object { python $_.FullName }   # Windows Powe
 ```
 
 Chương 1 dùng bốn file `00_` tới `03_`; chương 2 dùng chín file `04_` tới `12_`; chương 3 dùng
-mười hai file `13_` tới `24_`:
+mười hai file `13_` tới `24_`; chương 4 dùng mười một file `25_` tới `35_`:
 
 | File | Chương, mục | Sinh ra gì |
 |---|---|---|
@@ -85,6 +85,17 @@ mười hai file `13_` tới `24_`:
 | `22_doi_kieu_so_va_ngay.py` | 3.3.2, 3.3.3 | – |
 | `23_dong_trung.py` | 3.4.1, 3.4.2 | `output/ch03-trung-ma-sv.csv` |
 | `24_lam_sach.py` | 3.4.3 | `data/processed/du-lieu-sach.csv` |
+| `25_thang_do.py` | 4.1.1 | – |
+| `26_hai_bo_chuan_hoa.py` | 4.1.2 | – |
+| `27_chon_bo_chuan_hoa.py` | 4.1.3 | – |
+| `28_khop_tren_tap_huan_luyen.py` | 4.1.4 | – |
+| `29_ma_hoa_thu_bac_va_mot_nong.py` | 4.2.1, 4.2.2 | – |
+| `30_bien_nhieu_muc.py` | 4.2.3 | – |
+| `31_muc_la.py` | 4.2.4 | – |
+| `32_chia_tap.py` | 4.3.1, 4.3.2 | – |
+| `33_ro_ri_du_lieu.py` | 4.3.3 | – |
+| `34_dac_trung_khong_duoc_dung.py` | 4.3.4 | – |
+| `35_luu_du_lieu_da_xu_ly.py` | 4.4.1 | 6 file trong `data/processed/`, `models/bo-tien-xu-ly.joblib` |
 
 ## Lưu ý
 
