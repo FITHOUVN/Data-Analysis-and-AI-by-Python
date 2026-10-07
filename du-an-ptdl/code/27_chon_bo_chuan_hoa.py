@@ -43,7 +43,7 @@ def main() -> None:
     X_tr, X_te, y_tr, y_te = train_test_split(d[COT_SO], d[MUC_TIEU],
                                               test_size=0.2, random_state=42)
     cac_bo = [("không chuẩn hóa", None), ("khoảng [0, 1]", MinMaxScaler()),
-              ("phân phối chuẩn", StandardScaler()), ("bền với ngoại lai", RobustScaler())]
+              ("chuẩn hóa z", StandardScaler()), ("bền với ngoại lai", RobustScaler())]
     dong = []
     for ten, mo in MO_HINH.items():
         ket = {"mo_hinh": ten}

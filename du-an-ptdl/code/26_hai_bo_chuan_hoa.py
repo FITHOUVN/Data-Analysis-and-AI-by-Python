@@ -29,13 +29,13 @@ def hinh_dang_sau_bien_doi(d: pd.DataFrame) -> None:
     mm_ra = MinMaxScaler().set_output(transform="pandas").fit_transform(d[COT_SO])
     st_ra = StandardScaler().set_output(transform="pandas").fit_transform(d[COT_SO])
     for ten, bang in (("bản gốc", d[COT_SO]), ("khoảng [0, 1]", mm_ra),
-                      ("phân phối chuẩn", st_ra)):
+                      ("chuẩn hóa z", st_ra)):
         s = bang["nop_tre_tb_gio"]
         print(f"{ten:16s} nhỏ nhất {s.min():8.4f}  lớn nhất {s.max():8.4f}"
               f"  trung bình {s.mean():8.4f}  độ lệch {s.std():7.4f}"
               f"  phân vị 75% {s.quantile(0.75):8.4f}"
               f"  độ lệch bất đối xứng {s.skew():6.3f}")
-    print("Hai cột sau khi về phân phối chuẩn, trung bình và độ lệch chuẩn:")
+    print("Hai cột sau khi chuẩn hóa z, trung bình và độ lệch chuẩn:")
     print(st_ra[["tong_thoi_luong_phut", "ty_le_hoan_thanh_video"]]
           .agg(["mean", "std"]).round(6).to_string())
 

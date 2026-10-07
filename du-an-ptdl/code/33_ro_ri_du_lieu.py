@@ -64,7 +64,7 @@ def dong_trung_vuot_bien(d: pd.DataFrame) -> None:
 
 def main() -> None:
     d = pd.read_csv(VAO, parse_dates=["ngay_dang_ky"])
-    print("-- Chuẩn hóa về phân phối chuẩn, hai thứ tự chạy --")
+    print("-- Chuẩn hóa z, hai thứ tự chạy --")
     print(sai_thu_tu(d, StandardScaler()).to_string(index=False))
     print("\n-- Chuẩn hóa về khoảng [0, 1], hai thứ tự chạy --")
     print(sai_thu_tu(d, MinMaxScaler()).to_string(index=False))

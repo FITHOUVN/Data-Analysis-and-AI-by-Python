@@ -1,3 +1,7 @@
+<!-- Đây là BẢN GỐC của README đặt ở thư mục gốc kho mã công bố (GitHub).
+     Sửa ở đây rồi mới đẩy lên, đừng sửa trực tiếp trong bản clone: trước đây file này chỉ tồn tại
+     trong bản clone nên không ai soát được nó, và một câu sai đã nằm trên kho công bố nhiều ngày. -->
+
 # Phân tích dữ liệu và triển khai mô hình AI với Python
 
 Mã nguồn và dữ liệu đi kèm sách chuyên khảo **Phân tích dữ liệu và triển khai mô hình AI với Python**.
@@ -6,7 +10,7 @@ Khoa Công nghệ thông tin, Trường Đại học Mở Hà Nội.
 Chủ biên: TS. Đinh Tuấn Long. Tham gia biên soạn: ThS. Lê Ngọc An, CN. Nguyễn Đình Dũng, CN. Ngọ Văn Sơn.
 
 > **Sách đang trong quá trình biên soạn.** Mã nguồn của từng chương được bổ sung dần, sau khi chương
-> đó đã viết xong và qua rà soát. Hiện có mã của **chương 1 đến chương 4**.
+> đó đã viết xong và qua rà soát. Hiện có mã của **chương 1 đến chương 5**.
 
 ## Kho này có gì
 
@@ -30,9 +34,15 @@ máy khác với kết quả in trong sách.
 
 Sách chỉ in **phần mang bài học** của mỗi chương trình, tối đa khoảng 15 dòng. Phần khung lặp lại ở
 mọi file (nhập thư viện, đặt lại bảng mã cho đầu ra, dựng đường dẫn, hàm `main`) và phần trang trí
-biểu đồ được để ở kho này. Dòng `# ...` trong sách đánh dấu chỗ đã lược.
+biểu đồ được để ở kho này. Dòng `# ...` trong sách đánh dấu chỗ đã lược và nói rõ đã lược cái gì.
 
-Mọi đoạn mã in trong sách khớp **từng ký tự** với file tương ứng ở đây.
+Đoạn mã in trong sách và file ở đây dùng **cùng tên định danh, cùng thứ tự dòng**; khác nhau ở phần
+khung đã lược và ở thụt lề, vì nhiều đoạn được trích từ trong thân một hàm. Chỗ nào tên trong sách
+buộc phải khác tên trong file — khi một mạch kể in liền nhiều mô hình mà file gọi lại cùng một hàm —
+thì dòng `# ...` của sách nói ra điều đó.
+
+Mọi tham số ảnh hưởng tới con số in trong sách đều có mặt trong sách, nên gõ lại đoạn trích thì ra
+đúng con số sách in.
 
 ## Cài đặt
 
