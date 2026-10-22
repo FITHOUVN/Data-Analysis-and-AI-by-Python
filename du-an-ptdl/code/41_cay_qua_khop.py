@@ -45,8 +45,10 @@ def dem_la_mot_mau(cay_day, X_tr) -> None:
     la = cay.apply(cay_day.named_steps["tien"].transform(X_tr))
     dem = collections.Counter(la)
     mot = sum(1 for v in dem.values() if v == 1)
-    print("Độ sâu %d | số lá %d | số lá chỉ chứa một dòng huấn luyện %d (%.1f%%)"
-          % (cay.get_depth(), cay.get_n_leaves(), mot, mot / cay.get_n_leaves() * 100))
+    print("Độ sâu %d | số lá %d"
+          % (cay.get_depth(), cay.get_n_leaves()))
+    print("Số lá chỉ chứa một dòng huấn luyện %d (%.1f%%)"
+          % (mot, mot / cay.get_n_leaves() * 100))
 
 
 def main() -> None:

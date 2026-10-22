@@ -87,8 +87,10 @@ def hieu_qua_nhieu_lan_chia(X_tr, X_te, y_tr, y_te, tien, so_lan=10) -> None:
         print("  hạt %d: tuyến tính %.4f | rừng %.4f | hiệu %+.4f"
               % (hat, diem["tuyến tính"], diem["rừng ngẫu nhiên"], hieu[-1]))
     h = np.array(hieu)
-    print("Hiệu dương %d/%d lần | nhỏ nhất %+.4f | lớn nhất %+.4f | trung bình %+.4f"
-          % (int((h > 0).sum()), so_lan, h.min(), h.max(), h.mean()))
+    print("Hiệu dương %d/%d lần"
+          % (int((h > 0).sum()), so_lan))
+    print("   nhỏ nhất %+.4f | lớn nhất %+.4f | trung bình %+.4f"
+          % (h.min(), h.max(), h.mean()))
 
 
 def main() -> None:

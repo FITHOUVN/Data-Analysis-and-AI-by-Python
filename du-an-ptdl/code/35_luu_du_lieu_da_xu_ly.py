@@ -85,15 +85,17 @@ def kiem_nghiem_thu(tien) -> None:
     X_te_lai = pd.read_parquet(RA / "ch04-X-test.parquet")
     a, b = nap.transform(X_te_lai), tien.transform(X_te_lai)
     print("Bộ nạp lại cho kết quả giống bộ trong bộ nhớ:", bool(a.equals(b)))
-    print("Số đặc trưng sau biến đổi:", a.shape[1], "| ba cột cuối:", list(a.columns[-3:]))
-    print("Trung bình tám cột số của tập kiểm tra sau chuẩn hóa:",
-          [round(float(v), 4) for v in a.iloc[:, :8].mean()])
+    print("Số đặc trưng sau biến đổi:", a.shape[1], "| ba cột cuối:")
+    for c in a.columns[-3:]:
+        print("  ", c)
+    print("Trung bình tám cột số của tập kiểm tra sau chuẩn hóa:")
+    print(" ", [round(float(v), 4) for v in a.iloc[:, :8].mean()])
 
 
 def main() -> None:
     d = pd.read_csv(VAO, parse_dates=["ngay_dang_ky"])
     X_tr, X_te, y_tr, y_te, tien = chuan_bi(d)
-    print("Bỏ khỏi đặc trưng:", COT_BO)
+    print("Bỏ khỏi đặc trưng:", ", ".join(COT_BO))
     print("Đặc trưng:", len(COT_SO), "cột số +", len(DAC_TRUNG_PL), "cột phân loại")
     print("Tập huấn luyện", X_tr.shape, "| tập kiểm tra", X_te.shape)
     ghi_ra_file(X_tr, X_te, y_tr, y_te, tien)

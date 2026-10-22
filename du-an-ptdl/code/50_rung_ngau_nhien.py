@@ -80,8 +80,9 @@ def trong_long_rung(tien, X_tr, X_te, y_tr, y_te) -> None:
     cay = mo.named_steps["mo_hinh"].estimators_
     f1_le = np.array([f1_score(y_te, c.predict(Z_te)) for c in cay])
     f1_rung = f1_score(y_te, mo.predict(X_te))
-    print("F1 của 200 cây lẻ: nhỏ nhất %.4f | lớn nhất %.4f | trung bình %.4f"
-          % (f1_le.min(), f1_le.max(), f1_le.mean()))
+    print("F1 của 200 cây lẻ: nhỏ nhất %.4f | lớn nhất %.4f"
+          % (f1_le.min(), f1_le.max()))
+    print("                   trung bình %.4f" % f1_le.mean())
     print("F1 của cả rừng: %.4f | số cây lẻ vượt được cả rừng: %d/200"
           % (f1_rung, int((f1_le > f1_rung).sum())))
     print("Số giá trị xác suất khác nhau: cả rừng %d | một cây lẻ %d"

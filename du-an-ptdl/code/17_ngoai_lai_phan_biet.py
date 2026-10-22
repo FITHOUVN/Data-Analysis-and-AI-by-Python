@@ -16,20 +16,27 @@ print("Mười giá trị lớn nhất:", lon)
 
 # Bước nhảy: khoảng cách giữa hai giá trị liền nhau, đo bằng khoảng tứ phân vị
 print("\nKhoảng cách giữa hai giá trị liền nhau:")
-for truoc, sau in zip(lon, lon[1:]):               # khoảng cách hai giá trị liền nhau
+# khoảng cách hai giá trị liền nhau
+for truoc, sau in zip(lon, lon[1:]):
     rong = (sau - truoc) / iqr
-    print(f"  {truoc:6.1f} -> {sau:6.1f}  rộng {sau - truoc:6.1f} giờ = {rong:5.2f} IQR"
+    print(f"  {truoc:6.1f} -> {sau:6.1f}  rộng"
+          f" {sau - truoc:6.1f} giờ = {rong:5.2f} IQR"
           + ("  <-- bước nhảy" if rong >= 0.9 else ""))
 
 # Giả thuyết: tám ô này được ghi bằng phút thay vì bằng giờ
 nghi = sorted(df.loc[df[COT] > 100, COT].tolist())
 binh_thuong = df.loc[df[COT] <= 100, COT]
 print("\nGiả thuyết sai đơn vị, chia cho 60:")
-print("  nguyên bản:", nghi)
-print("  chia 60   :", [round(v / 60, 2) for v in nghi])
-print("  miền của phần còn lại: từ", binh_thuong.min(), "tới", binh_thuong.max(), "giờ")
+print("  nguyên bản:")
+print("   ", nghi)
+print("  chia 60:")
+print("   ", [round(v / 60, 2) for v in nghi])
+print("  miền của phần còn lại: từ", binh_thuong.min(),
+      "tới", binh_thuong.max(), "giờ")
+trong_mien = all(binh_thuong.min() <= v / 60 <= binh_thuong.max()
+                 for v in nghi)
 print("  tám giá trị sau khi chia 60 đều nằm trong miền đó:",
-      all(binh_thuong.min() <= v / 60 <= binh_thuong.max() for v in nghi))
+      trong_mien)
 
 # Miền hợp lý theo nghiệp vụ, viết trước khi xem dữ liệu
 MIEN_HOP_LY = {"so_lan_dang_nhap": (0, 500), "tong_thoi_luong_phut": (0, 20000),

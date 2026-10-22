@@ -50,9 +50,12 @@ def do_nhay_voi_sai_so_lon(y_te, du_goc, sai) -> None:
     mae_sau = mean_absolute_error(y_te[giu], du_goc[giu])
     rmse_sau = root_mean_squared_error(y_te[giu], du_goc[giu])
     print("Tỉ số RMSE/MAE = %.3f" % (rmse_truoc / mae_truoc))
-    print("Bỏ 10 ca tệ nhất: MAE %.4f -> %.4f (giảm %.1f%%) | RMSE %.4f -> %.4f (giảm %.1f%%)"
-          % (mae_truoc, mae_sau, (mae_truoc - mae_sau) / mae_truoc * 100,
-             rmse_truoc, rmse_sau, (rmse_truoc - rmse_sau) / rmse_truoc * 100))
+    print("Bỏ 10 ca tệ nhất: MAE %.4f -> %.4f (giảm %.1f%%)"
+          % (mae_truoc, mae_sau,
+             (mae_truoc - mae_sau) / mae_truoc * 100))
+    print("                  RMSE %.4f -> %.4f (giảm %.1f%%)"
+          % (rmse_truoc, rmse_sau,
+             (rmse_truoc - rmse_sau) / rmse_truoc * 100))
 
 
 def r2_bang_tay(y_te, du_goc) -> None:

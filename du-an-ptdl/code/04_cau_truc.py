@@ -15,12 +15,12 @@ print("1 |", type(df[["ma_sv"]]).__name__, "có .str:", hasattr(df[["ma_sv"]], "
 
 # Hệ quả 2: mỗi cột một kiểu, nên sum() nối chuỗi còn mean() dừng
 nho = df.loc[:3, ["hinh_thuc_hoc", "so_bai_tap_nop", "diem_cuoi_ky"]]
-print("2 | sum()              :", nho.sum().to_dict())
-print("2 | sum(numeric_only=1):", nho.sum(numeric_only=True).to_dict())
+print("2 | sum() chữ  :", nho.sum()["hinh_thuc_hoc"])
+print("2 | sum() số   :", nho.sum(numeric_only=True).to_dict())
 try:
     nho.mean()
 except TypeError as loi:
-    print("2 | mean()             :", loi)
+    print("2 | mean()     :", loi)
 
 # Hệ quả 3: lọc xong, chỉ mục vẫn giữ nhãn dòng của bảng gốc
 yeu = df[df["diem_cuoi_ky"] < 4.0]

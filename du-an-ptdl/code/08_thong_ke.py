@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 sys.stdout.reconfigure(encoding="utf-8")
-pd.set_option("display.width", 1000)
+pd.set_option("display.width", 68)
 pd.set_option("display.max_columns", 20)       # thiếu dòng này, bảng in ra bị thay bằng "..."
 GOC_DU_AN = Path(__file__).resolve().parent.parent
 df = pd.read_csv(GOC_DU_AN / "data" / "raw" / "sinhvien-truc-tuyen.csv", encoding="utf-8")

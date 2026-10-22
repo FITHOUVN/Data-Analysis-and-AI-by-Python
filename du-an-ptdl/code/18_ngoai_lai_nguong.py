@@ -14,21 +14,26 @@ COT_SO = ["so_lan_dang_nhap", "tong_thoi_luong_phut", "ty_le_hoan_thanh_video",
 
 
 def hai_nguong(s: pd.Series) -> dict:
-    """Trả về hai cặp ngưỡng và số dòng vượt ngưỡng theo từng cách."""
+    """Trả về hai cặp ngưỡng và số dòng vượt ngưỡng
+    theo từng cách."""
     q1, q3 = s.quantile(0.25), s.quantile(0.75)
     iqr = q3 - q1
     d_iqr, t_iqr = q1 - 1.5 * iqr, q3 + 1.5 * iqr
     mu, sd = s.mean(), s.std()
     d_sd, t_sd = mu - 3 * sd, mu + 3 * sd
-    return {"tren_iqr": round(t_iqr, 2), "vuot_iqr": int(((s < d_iqr) | (s > t_iqr)).sum()),
-            "tren_3sd": round(t_sd, 2), "vuot_3sd": int(((s < d_sd) | (s > t_sd)).sum()),
+    vuot_iqr = int(((s < d_iqr) | (s > t_iqr)).sum())
+    vuot_sd = int(((s < d_sd) | (s > t_sd)).sum())
+    return {"tren_iqr": round(t_iqr, 2), "vuot_iqr": vuot_iqr,
+            "tren_3sd": round(t_sd, 2), "vuot_3sd": vuot_sd,
             "sd_tren_iqr": round(sd / iqr, 2)}
 
 
-print(pd.DataFrame([{"cot": c, **hai_nguong(df[c])} for c in COT_SO]).to_string(index=False))
+dong = [{"cot": c, **hai_nguong(df[c])} for c in COT_SO]
+print(pd.DataFrame(dong).to_string(index=False))
 
 # Phần vượt ngưỡng còn lại sau khi trừ các dòng đã ghi riêng là giá trị canh và lỗi ghi nhận
-da_ghi_rieng = ((df["tong_thoi_luong_phut"] == 99999) | (df["so_lan_dang_nhap"] < 0)
+da_ghi_rieng = ((df["tong_thoi_luong_phut"] == 99999)
+                | (df["so_lan_dang_nhap"] < 0)
                 | (df["nop_tre_tb_gio"] > 100))
 mat_na_dong = pd.Series(False, index=df.index)
 tong_o, so_cot = 0, 0
@@ -39,18 +44,23 @@ for cot in COT_SO:
     tong_o += int(con_lai.sum())
     so_cot += int(con_lai.any())
     mat_na_dong |= con_lai                         # một dòng có thể vượt ngưỡng ở nhiều cột
-print("\nVượt ngưỡng IQR sau khi trừ", int(da_ghi_rieng.sum()), "dòng đã ghi riêng:",
-      tong_o, "ô trên", int(mat_na_dong.sum()), "dòng,", so_cot, "cột")
+print("\nVượt ngưỡng IQR sau khi trừ", int(da_ghi_rieng.sum()),
+      "dòng đã ghi riêng:")
+print(" ", tong_o, "ô trên", int(mat_na_dong.sum()), "dòng,",
+      so_cot, "cột")
 
 # Hiệu ứng che: chính 14 ô giá trị canh đã kéo ngưỡng 3 độ lệch chuẩn ra xa
 s = df["tong_thoi_luong_phut"]
 sach = s[s != 99999]
 print("\ntong_thoi_luong_phut, trước khi bỏ 14 ô giá trị canh:")
-print("  trung bình %.2f, độ lệch chuẩn %.2f, ngưỡng trên 3sd %.2f"
-      % (s.mean(), s.std(), s.mean() + 3 * s.std()))
+print("  trung bình %.2f, độ lệch chuẩn %.2f"
+      % (s.mean(), s.std()))
+print("  ngưỡng trên 3sd %.2f" % (s.mean() + 3 * s.std()))
 print("tong_thoi_luong_phut, sau khi bỏ 14 ô giá trị canh:")
-print("  trung bình %.2f, độ lệch chuẩn %.2f, ngưỡng trên 3sd %.2f, vượt %d dòng"
-      % (sach.mean(), sach.std(), sach.mean() + 3 * sach.std(),
+print("  trung bình %.2f, độ lệch chuẩn %.2f"
+      % (sach.mean(), sach.std()))
+print("  ngưỡng trên 3sd %.2f, vượt %d dòng"
+      % (sach.mean() + 3 * sach.std(),
          (sach > sach.mean() + 3 * sach.std()).sum()))
 q1, q3 = sach.quantile(0.25), sach.quantile(0.75)
 print("  ngưỡng trên 1,5 IQR %.2f, vượt %d dòng"

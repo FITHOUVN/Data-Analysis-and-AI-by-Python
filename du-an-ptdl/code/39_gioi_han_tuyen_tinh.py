@@ -86,8 +86,10 @@ def mot_dong_ngoai_lai(X_tr, X_te, y_tr, y_te, tien, du_goc) -> None:
 def chan_ve_mien(y_te, du_goc) -> None:
     """Chặn dự đoán về miền hợp lệ của biến mục tiêu, tức thang điểm từ 0,0 tới 10,0."""
     ngoai = (du_goc < 0.0) | (du_goc > 10.0)
-    print("Dự đoán rơi ngoài thang điểm: %d/%d | nhỏ nhất %.2f | lớn nhất %.2f"
-          % (int(ngoai.sum()), len(du_goc), du_goc.min(), du_goc.max()))
+    print("Dự đoán rơi ngoài thang điểm: %d/%d"
+          % (int(ngoai.sum()), len(du_goc)))
+    print("   nhỏ nhất %.2f | lớn nhất %.2f"
+          % (du_goc.min(), du_goc.max()))
     chan = np.clip(du_goc, 0.0, 10.0)
     print("Sau khi chặn: MAE %.4f (trước %.4f) | R2 %.4f (trước %.4f)"
           % (mean_absolute_error(y_te, chan), mean_absolute_error(y_te, du_goc),

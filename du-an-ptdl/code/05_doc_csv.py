@@ -29,7 +29,8 @@ print(df.isna().sum()[df.isna().sum() > 0])                        # bước 5
 # usecols + nrows: chỉ đọc phần đang cần
 mau = pd.read_csv(FILE_DU_LIEU, encoding="utf-8", nrows=5,
                   usecols=["diem_cuoi_ky", "ma_sv", "hinh_thuc_hoc", "diem_giua_ky"])
-print("\nusecols cho các cột:", list(mau.columns), "| kích thước", mau.shape)
+print("\nusecols:", ", ".join(mau.columns))
+print("kích thước:", mau.shape)
 
 f_ma = TAM / "ma-lop.csv"                    # mã lớp có số 0 ở đầu
 f_ma.write_text("ma_lop,si_so\n007,45\n012,38\n", encoding="utf-8")

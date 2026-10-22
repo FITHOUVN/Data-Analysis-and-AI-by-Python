@@ -5,7 +5,8 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 
 GOC_DU_AN = Path(__file__).resolve().parent.parent
-FILE_DU_LIEU = GOC_DU_AN / "data" / "raw" / "sinhvien-truc-tuyen.csv"
+FILE_DU_LIEU = (GOC_DU_AN / "data" / "raw"
+                / "sinhvien-truc-tuyen.csv")
 
 
 def main() -> None:

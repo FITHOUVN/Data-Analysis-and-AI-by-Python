@@ -21,11 +21,11 @@ MUC_TIEU = "diem_cuoi_ky"
 
 def bang_thang_do(d: pd.DataFrame) -> None:
     """In miền giá trị và độ rộng của tám cột số, sắp theo độ rộng."""
-    bang = pd.DataFrame({"nho_nhat": d[COT_SO].min(), "lon_nhat": d[COT_SO].max()})
-    bang["do_rong"] = bang["lon_nhat"] - bang["nho_nhat"]
-    bang["do_lech_chuan"] = d[COT_SO].std()
+    bang = pd.DataFrame({"min": d[COT_SO].min(), "max": d[COT_SO].max()})
+    bang["do_rong"] = bang["max"] - bang["min"]
+    bang["do_lech"] = d[COT_SO].std()
     bang = bang.sort_values("do_rong", ascending=False)
-    bang["lan_so_cot_hep_nhat"] = (bang["do_rong"] / bang["do_rong"].min()).round(1)
+    bang["gap_lan"] = (bang["do_rong"] / bang["do_rong"].min()).round(1)
     print(bang.round(3).to_string())
 
 

@@ -18,17 +18,21 @@ df = pd.read_csv(GOC_DU_AN / "data" / "raw" / "sinhvien-truc-tuyen.csv", encodin
 s, y = df["nop_tre_tb_gio"], df["diem_cuoi_ky"]
 q1, q3 = s.quantile(0.25), s.quantile(0.75)
 tren, p99 = q3 + 1.5 * (q3 - q1), s.quantile(0.99)
-nghi = s > 100                                     # tám dòng đã khoanh ở mục 3.2.1
+nghi = s > 100          # tám dòng đã khoanh ở mục 3.2.1
 
 thanh_thieu = s.mask(nghi)
+dien_tv = thanh_thieu.fillna(thanh_thieu.median())
 cach = {"giữ nguyên": (s, y),
-        f"chặn biên tại ngưỡng IQR {tren:.2f}": (s.clip(upper=tren), y),
-        f"chặn biên tại phân vị 99% {p99:.2f}": (s.clip(upper=p99), y),
-        "thành giá trị thiếu rồi điền trung vị": (thanh_thieu.fillna(thanh_thieu.median()), y),
+        f"chặn biên tại ngưỡng IQR {tren:.2f}":
+            (s.clip(upper=tren), y),
+        f"chặn biên tại phân vị 99% {p99:.2f}":
+            (s.clip(upper=p99), y),
+        "thành giá trị thiếu rồi điền trung vị": (dien_tv, y),
         "loại bỏ 8 dòng": (s[~nghi], y[~nghi])}
 dong = [{"cach": ten, "n": len(x), "trung_binh": round(x.mean(), 3),
          "do_lech": round(x.std(), 3), "lon_nhat": round(x.max(), 2),
-         "tuong_quan": round(x.corr(yy), 4)} for ten, (x, yy) in cach.items()]
+         "tuong_quan": round(x.corr(yy), 4)}
+        for ten, (x, yy) in cach.items()]
 print(pd.DataFrame(dong).to_string(index=False))
 
 truc = plt.subplots(figsize=(7, 4))[1]

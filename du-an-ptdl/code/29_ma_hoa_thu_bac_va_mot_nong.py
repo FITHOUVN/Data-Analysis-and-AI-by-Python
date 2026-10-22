@@ -36,7 +36,8 @@ def khi_thu_tu_sai(d: pd.DataFrame) -> None:
     tu_sap = tu_sap_bo.transform(muc).ravel()
     print("Số dòng mỗi mức:", muc["muc_video"].value_counts().to_dict())
     print("Thứ tự tự sắp:", list(tu_sap_bo.categories_[0]))
-    print("Tương quan mã với diem_cuoi_ky: đúng thứ tự %+.4f | bảng chữ cái %+.4f"
+    print("Tương quan mã với diem_cuoi_ky:")
+    print("  đúng thứ tự %+.4f | bảng chữ cái %+.4f"
           % (pd.Series(dung).corr(d[MUC_TIEU]), pd.Series(tu_sap).corr(d[MUC_TIEU])))
 
 
@@ -52,8 +53,8 @@ def ma_hoa_mot_nong(d: pd.DataFrame) -> None:
     bo_bo_mot = OneHotEncoder(sparse_output=False, drop="first")
     bo_bo_mot.set_output(transform="pandas")
     X2 = bo_bo_mot.fit_transform(d[COT_DANH_NGHIA])
-    print("Với drop='first':", X2.shape[1], "cột; mức bị bỏ của từng cột:",
-          [c[0] for c in bo_bo_mot.categories_])
+    print("Với drop='first':", X2.shape[1], "cột; mức bị bỏ của từng cột:")
+    print(" ", [c[0] for c in bo_bo_mot.categories_])
     dummies = pd.get_dummies(d[COT_DANH_NGHIA])
     print("pd.get_dummies cho", dummies.shape[1], "cột, kiểu",
           dummies.dtypes.unique().tolist())

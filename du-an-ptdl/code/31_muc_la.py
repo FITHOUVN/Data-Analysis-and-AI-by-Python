@@ -21,7 +21,8 @@ def bao_loi(d: pd.DataFrame) -> None:
     try:
         bo.transform(MOI)
     except ValueError as loi:
-        print("ValueError:", str(loi).split("\n")[0])
+        print("ValueError:")
+        print(" ", str(loi).split("\n")[0])
 
 
 def hai_cach_khong_dung(d: pd.DataFrame) -> None:

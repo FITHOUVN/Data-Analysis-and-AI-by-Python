@@ -19,10 +19,10 @@ def lech_trung_binh(d: pd.DataFrame, X_tr: pd.DataFrame) -> None:
     """So trung bình của bộ chuẩn hóa khi khớp trên toàn bộ dữ liệu và khi khớp trên tập huấn luyện."""
     toan_bo = StandardScaler().fit(d[COT_SO])
     chi_train = StandardScaler().fit(X_tr)
-    bang = pd.DataFrame({"mean_ toàn bộ": toan_bo.mean_, "mean_ chỉ train": chi_train.mean_},
-                        index=COT_SO)
-    bang["lệch mean_"] = (bang["mean_ toàn bộ"] - bang["mean_ chỉ train"]).abs()
-    bang["lệch mean_ %"] = bang["lệch mean_"] / bang["mean_ chỉ train"].abs() * 100
+    bang = pd.DataFrame({"mean_ toàn bộ": toan_bo.mean_,
+                         "mean_ train": chi_train.mean_}, index=COT_SO)
+    bang["lệch"] = (bang["mean_ toàn bộ"] - bang["mean_ train"]).abs()
+    bang["lệch %"] = bang["lệch"] / bang["mean_ train"].abs() * 100
     print(bang.round(4).to_string())
 
 

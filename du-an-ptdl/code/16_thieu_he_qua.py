@@ -17,10 +17,12 @@ cach = {"xóa dòng thiếu": (goc.dropna(), y[goc.notna()]),
         "điền trung bình": (goc.fillna(trung_binh), y),
         "điền 0": (goc.fillna(0.0), y)}
 dong = [{"cach": ten, "n": len(x), "trung_binh": round(x.mean(), 3),
-         "do_lech": round(x.std(), 4), "Q1": round(x.quantile(0.25), 3),
+         "do_lech": round(x.std(), 4),
+         "Q1": round(x.quantile(0.25), 3),
          "Q3": round(x.quantile(0.75), 3),
          "so_o_bang_trung_vi": int((x == trung_vi).sum()),
-         "tuong_quan": round(x.corr(yy), 4)} for ten, (x, yy) in cach.items()]
+         "tuong_quan": round(x.corr(yy), 4)}
+        for ten, (x, yy) in cach.items()]
 print(pd.DataFrame(dong).to_string(index=False))
 
 # Điền bằng mức hay gặp nhất xóa mất nhóm thiếu; điền "Không rõ" giữ nhóm đó lại

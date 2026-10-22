@@ -1,5 +1,6 @@
 """Chia tập: ba tập, vai trò của random_state và chia phân tầng (mục 4.3.1 và 4.3.2)."""
 import sys
+import textwrap
 from pathlib import Path
 
 import pandas as pd
@@ -46,9 +47,12 @@ def doi_hat_ngau_nhien(X: pd.DataFrame, y: pd.Series) -> None:
         mo = Pipeline([("tien", tien_xu_ly()), ("hoi_quy", LinearRegression())]).fit(X_tr, y_tr)
         ket.append(round(r2_score(y_te, mo.predict(X_te)), 4))
     s = pd.Series(ket)
-    print("R2 theo random_state 0..9:", ket)
-    print("nhỏ nhất %.4f | lớn nhất %.4f | khoảng rộng %.4f | độ lệch chuẩn %.4f"
-          % (s.min(), s.max(), s.max() - s.min(), s.std()))
+    print("R2 theo random_state 0..9:")
+    print(textwrap.fill(str(ket), 64, initial_indent="  ",
+                        subsequent_indent="   "))
+    print("nhỏ nhất %.4f | lớn nhất %.4f" % (s.min(), s.max()))
+    print("khoảng rộng %.4f | độ lệch chuẩn %.4f"
+          % (s.max() - s.min(), s.std()))
 
 
 def phan_tang(d: pd.DataFrame) -> None:
@@ -62,8 +66,10 @@ def phan_tang(d: pd.DataFrame) -> None:
             _, y_te_nhan = train_test_split(y_nhan, test_size=0.2, random_state=hat,
                                             stratify=tang)
             ty_le.append(round(float((y_te_nhan == "Không đạt").mean()) * 100, 2))
-        print("%-12s %s | rộng %.2f điểm phần trăm"
-              % (ten, ty_le, max(ty_le) - min(ty_le)))
+        print("%-12s rộng %.2f điểm phần trăm"
+              % (ten, max(ty_le) - min(ty_le)))
+        print(textwrap.fill(str(ty_le), 64, initial_indent="  ",
+                            subsequent_indent="   "))
 
 
 def main() -> None:

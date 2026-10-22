@@ -29,7 +29,7 @@ def ma_sinh_vien_lam_dac_trung(d: pd.DataFrame) -> None:
     X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
     la = set(X_te["ma_sv"]) - set(X_tr["ma_sv"])
     print("Số mã sinh viên khác nhau:", int(d["ma_sv"].nunique()), "trên", len(d), "dòng")
-    print("Mã của tập kiểm tra chưa từng thấy trong tập huấn luyện:",
+    print("Mã tập kiểm tra chưa từng thấy trong tập huấn luyện:",
           len(la), "trên", int(X_te["ma_sv"].nunique()))
     for ten, tien in (
             ("có thêm ma_sv", ColumnTransformer(
@@ -37,9 +37,10 @@ def ma_sinh_vien_lam_dac_trung(d: pd.DataFrame) -> None:
                  ("ma", OneHotEncoder(handle_unknown="ignore"), ["ma_sv"])])),
             ("không có ma_sv", ColumnTransformer([("so", "passthrough", COT_SO)]))):
         mo = Pipeline([("tien", tien), ("hoi_quy", LinearRegression())]).fit(X_tr, y_tr)
-        print("%-15s %4d đặc trưng | R2 huấn luyện %.4f | R2 kiểm tra %.4f"
-              % (ten, mo.named_steps["tien"].transform(X_tr).shape[1],
-                 r2_score(y_tr, mo.predict(X_tr)), r2_score(y_te, mo.predict(X_te))))
+        print("%-15s %4d đặc trưng"
+              % (ten, mo.named_steps["tien"].transform(X_tr).shape[1]))
+        print("  R2 huấn luyện %.4f | R2 kiểm tra %.4f"
+              % (r2_score(y_tr, mo.predict(X_tr)), r2_score(y_te, mo.predict(X_te))))
 
 
 def cot_suy_ra_tu_muc_tieu(d: pd.DataFrame) -> None:
@@ -47,6 +48,8 @@ def cot_suy_ra_tu_muc_tieu(d: pd.DataFrame) -> None:
     print("Quy tắc ẩn trong dữ liệu, kiểm bằng bảng chéo:")
     print(pd.crosstab(d[MUC_TIEU] >= 4.0, d["ket_qua"]).to_string())
     y_nhan = (d["ket_qua"] == "Không đạt").astype("int64")
+    print("%-16s %-17s %8s  %s"
+          % ("đặc trưng", "mô hình", "accuracy", "ma trận nhầm lẫn"))
     for ten, cot_so in (("có diem_cuoi_ky", COT_SO + [MUC_TIEU]), ("không có", COT_SO)):
         X = d[cot_so + DAC_TRUNG_PL]
         X_tr, X_te, y_tr, y_te = train_test_split(X, y_nhan, test_size=0.2,
@@ -58,7 +61,7 @@ def cot_suy_ra_tu_muc_tieu(d: pd.DataFrame) -> None:
                                                                         random_state=42))):
             mo = Pipeline([("tien", tien), ("phan_loai", mo_hinh)]).fit(X_tr, y_tr)
             du_doan = mo.predict(X_te)
-            print("%-16s %-18s accuracy %.4f | ma trận nhầm lẫn %s"
+            print("%-16s %-17s %8.4f  %s"
                   % (ten, nhan, accuracy_score(y_te, du_doan),
                      confusion_matrix(y_te, du_doan).tolist()))
 

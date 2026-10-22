@@ -16,12 +16,14 @@ for cot in df.columns[df.isna().any()]:
     thieu = df[cot].isna()
     tb_thieu = df.loc[thieu, MUC_TIEU].mean()
     tb_du = df.loc[~thieu, MUC_TIEU].mean()
+    chenh = (tb_thieu - tb_du) / do_lech
     dong.append({"cot": cot, "so_o": int(thieu.sum()),
                  "ty_le_%": round(thieu.mean() * 100, 2),
-                 "diem_nhom_thieu": round(tb_thieu, 3),
-                 "diem_nhom_du": round(tb_du, 3),
-                 "chenh_tren_do_lech": round((tb_thieu - tb_du) / do_lech, 3)})
-print(pd.DataFrame(dong).sort_values("so_o", ascending=False).to_string(index=False))
+                 "tb_thieu": round(tb_thieu, 3),
+                 "tb_du": round(tb_du, 3),
+                 "chenh_sd": round(chenh, 3)})
+bang = pd.DataFrame(dong).sort_values("so_o", ascending=False)
+print(bang.to_string(index=False))
 
 print("\nĐộ lệch chuẩn của", MUC_TIEU, ":", round(do_lech, 3))
 print("Số dòng có ít nhất một ô thiếu:", df.isna().any(axis=1).sum())

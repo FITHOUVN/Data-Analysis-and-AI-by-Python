@@ -50,11 +50,11 @@ def nghiem_thu(bang, X_tr, X_te, y_tr, y_te) -> None:
     """Bốn con số phải kiểm trước khi huấn luyện mô hình phân loại nào."""
     print("Bảng đầy đủ", bang.shape, "| đặc trưng", X_tr.shape[1], "cột")
     print("Tập huấn luyện", X_tr.shape, "| tập kiểm tra", X_te.shape)
-    print("Lớp dương '%s': cả bảng %d (%.2f%%) | huấn luyện %d (%.2f%%)"
-          " | kiểm tra %d (%.2f%%)"
+    print("Lớp dương '%s': cả bảng %d (%.2f%%)"
           % (LOP_DUONG, int(y_tr.sum() + y_te.sum()),
-             float((y_tr.sum() + y_te.sum()) / (len(y_tr) + len(y_te))) * 100,
-             int(y_tr.sum()), float(y_tr.mean()) * 100,
+             float((y_tr.sum() + y_te.sum()) / (len(y_tr) + len(y_te))) * 100))
+    print("   huấn luyện %d (%.2f%%) | kiểm tra %d (%.2f%%)"
+          % (int(y_tr.sum()), float(y_tr.mean()) * 100,
              int(y_te.sum()), float(y_te.mean()) * 100))
     print("Số ô thiếu trong đặc trưng:", int(X_tr.isna().sum().sum()),
           "| số dòng hai tập cộng lại:", len(X_tr) + len(X_te))
@@ -89,10 +89,11 @@ def do_ro_ri(bang, tien) -> None:
         mo = Pipeline([("tien", tien_xu_ly_co_ro_ri()), ("mo_hinh", clone(goc))]).fit(A, a)
         sach = Pipeline([("tien", clone(tien)), ("mo_hinh", clone(goc))]).fit(A, a)
         nh, nh_sach = mo.predict(B), sach.predict(B)
-        print("%-18s accuracy %.4f | recall %.4f | ma trận nhầm lẫn %s"
-              % (ten, accuracy_score(b, nh), recall_score(b, nh),
-                 confusion_matrix(b, nh).tolist()))
-        print("%-18s ba con số so với bản bỏ cột: đổi %d/%d nhãn"
+        print("%-17s accuracy %.4f | recall %.4f"
+              % (ten, accuracy_score(b, nh), recall_score(b, nh)))
+        print("%-17s ma trận nhầm lẫn %s"
+              % ("", confusion_matrix(b, nh).tolist()))
+        print("%-17s ba con số so với bản bỏ cột: đổi %d/%d nhãn"
               " | lệch xác suất lớn nhất %.4f | lệch F1 %+.4f"
               % ("", int((nh != nh_sach).sum()), len(b),
                  float(np.abs(mo.predict_proba(B)[:, 1]
@@ -103,15 +104,15 @@ def do_ro_ri(bang, tien) -> None:
 def dung_moc(X_tr, X_te, y_tr, y_te) -> None:
     """Bốn mô hình mốc của scikit-learn, trên cùng tập kiểm tra."""
     dong = []
-    for cach, nhan in (("most_frequent", "luôn đoán lớp hay gặp nhất"),
-                       ("stratified", "đoán ngẫu nhiên theo tỉ lệ lớp"),
-                       ("uniform", "đoán ngẫu nhiên hai lớp đều nhau")):
+    for cach, nhan in (("most_frequent", "luôn đoán lớp đa số"),
+                       ("stratified", "ngẫu nhiên theo tỉ lệ lớp"),
+                       ("uniform", "ngẫu nhiên đều hai lớp")):
         moc = DummyClassifier(strategy=cach, random_state=42).fit(X_tr, y_tr)
         nh = moc.predict(X_te)
         dong.append(nam_do_do(nhan, y_te, nh, moc.predict_proba(X_te)[:, 1]))
     print(pd.DataFrame(dong).to_string(index=False))
     moc = DummyClassifier(strategy="most_frequent").fit(X_tr, y_tr)
-    print("Ma trận nhầm lẫn của mốc luôn đoán lớp hay gặp nhất:",
+    print("Ma trận nhầm lẫn của mốc luôn đoán lớp đa số:",
           confusion_matrix(y_te, moc.predict(X_te)).tolist())
 
 

@@ -55,9 +55,11 @@ def gop_muc_hiem(d: pd.DataFrame) -> None:
     for nguong in (0, 100, 150):
         bo = OneHotEncoder(sparse_output=False,
                            min_frequency=nguong if nguong else None).fit(d[["tinh_thanh"]])
-        print("min_frequency = %-4s -> %2d cột; mức bị gộp: %s"
-              % (nguong or "None", len(bo.get_feature_names_out()),
-                 list(bo.infrequent_categories_[0]) if nguong else "không có"))
+        print("min_frequency = %-4s -> %2d cột; mức bị gộp:"
+              % (nguong or "None", len(bo.get_feature_names_out())))
+        hiem = list(bo.infrequent_categories_[0]) if nguong else ["không có"]
+        for i in range(0, len(hiem), 4):
+            print("  " + ", ".join(hiem[i:i + 4]))
 
 
 def muc_hiem_sau_khi_chia(d: pd.DataFrame) -> None:

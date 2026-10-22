@@ -13,27 +13,36 @@ df = pd.read_csv(GOC_DU_AN / "data" / "raw" / "sinhvien-truc-tuyen.csv", encodin
 COT_SO_DIEN = ["diem_giua_ky", "ty_le_hoan_thanh_video"]
 
 trung_vi = df[COT_SO_DIEN].median()
-print("Trung vị dùng để điền:", trung_vi.round(3).to_dict())
+print("Trung vị dùng để điền:")
+print(" ", trung_vi.round(3).to_dict())
 
-d = df.fillna(trung_vi.to_dict())                       # mỗi cột một giá trị riêng
+d = df.fillna(trung_vi.to_dict())   # mỗi cột một giá trị riêng
 for cot in ["tinh_thanh", "thiet_bi_chinh"]:
-    d[cot] = d[cot].fillna("Không rõ")                  # giữ nhóm thiếu thành một mức riêng
+    # giữ nhóm thiếu thành một mức riêng
+    d[cot] = d[cot].fillna("Không rõ")
 print("Số ô thiếu còn lại   :", int(d.isna().sum().sum()))
-print("Số mức tinh_thanh    :", df["tinh_thanh"].nunique(), "->", d["tinh_thanh"].nunique())
-print("Số dòng mức Không rõ :", int((d["tinh_thanh"] == "Không rõ").sum()))
+print("Số mức tinh_thanh    :", df["tinh_thanh"].nunique(),
+      "->", d["tinh_thanh"].nunique())
+so_khong_ro = int((d["tinh_thanh"] == "Không rõ").sum())
+print("Số dòng mức Không rõ :", so_khong_ro)
 
 # Bẫy: gọi inplace trên MỘT CỘT là gọi trên kết quả trung gian, dữ liệu không đổi
 thu = df.copy()
-thu["diem_giua_ky"].fillna(6.0, inplace=True)           # KHÔNG có tác dụng
+thu["diem_giua_ky"].fillna(6.0, inplace=True)   # KHÔNG có tác dụng
 print("Sau fillna(inplace=True) trên một cột, số ô thiếu:",
       int(thu["diem_giua_ky"].isna().sum()))
-thu["diem_giua_ky"] = thu["diem_giua_ky"].fillna(6.0)   # cách sách dùng: gán lại
+# cách sách dùng: gán lại
+thu["diem_giua_ky"] = thu["diem_giua_ky"].fillna(6.0)
 print("Sau phép gán lại, số ô thiếu                     :",
       int(thu["diem_giua_ky"].isna().sum()))
 
 # Lưu lại giá trị đã điền để dùng cho dữ liệu mới
 bo_dien = SimpleImputer(strategy="median").fit(df[COT_SO_DIEN])
-da_hoc = {c: float(v) for c, v in zip(COT_SO_DIEN, bo_dien.statistics_)}
-print("Giá trị bộ điền đã học:", da_hoc)
-moi = pd.DataFrame({"diem_giua_ky": [np.nan], "ty_le_hoan_thanh_video": [0.5]})
-print("Điền cho một dòng mới :", bo_dien.transform(moi).round(3).tolist())
+da_hoc = {c: float(v)
+          for c, v in zip(COT_SO_DIEN, bo_dien.statistics_)}
+print("Giá trị bộ điền đã học:")
+print(" ", da_hoc)
+moi = pd.DataFrame({"diem_giua_ky": [np.nan],
+                    "ty_le_hoan_thanh_video": [0.5]})
+print("Điền cho một dòng mới :",
+      bo_dien.transform(moi).round(3).tolist())

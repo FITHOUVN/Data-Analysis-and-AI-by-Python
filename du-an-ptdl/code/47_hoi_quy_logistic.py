@@ -44,9 +44,10 @@ def dung_tuyen_tinh(tien, X_tr, X_te, y_tr, y_te) -> None:
     print("Số giá trị rơi ngoài [0, 1]: %d/%d (dưới 0: %d | trên 1: %d)"
           % (int(ngoai.sum()), len(d), int((d < 0).sum()), int((d > 1).sum())))
     nhan = (d >= 0.5).astype(int)
-    print("Cắt ở 0,5: accuracy %.4f | precision %.4f | recall %.4f | F1 %.4f"
-          % (accuracy_score(y_te, nhan), precision_score(y_te, nhan),
-             recall_score(y_te, nhan), f1_score(y_te, nhan)))
+    print("Cắt ở 0,5: accuracy %.4f | precision %.4f"
+          % (accuracy_score(y_te, nhan), precision_score(y_te, nhan)))
+    print("           recall %.4f | F1 %.4f"
+          % (recall_score(y_te, nhan), f1_score(y_te, nhan)))
     print("Ma trận nhầm lẫn:", confusion_matrix(y_te, nhan).tolist())
 
 

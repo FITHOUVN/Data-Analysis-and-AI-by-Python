@@ -58,7 +58,7 @@ def dong_trung_vuot_bien(d: pd.DataFrame) -> None:
     trung = d.loc[d.duplicated(subset=["ma_sv"], keep=False), "ma_sv"].unique()
     bi_tach = [m for m in trung if (tr["ma_sv"] == m).any() and (te["ma_sv"] == m).any()]
     print("Số mã còn trùng:", len(trung), "| số mã bị chia sang hai tập:", len(bi_tach))
-    print("Số dòng tập kiểm tra có bản sinh đôi trong tập huấn luyện:",
+    print("Số dòng kiểm tra có bản sinh đôi trong tập huấn luyện:",
           int(te["ma_sv"].isin(bi_tach).sum()), "trên", len(te))
 
 

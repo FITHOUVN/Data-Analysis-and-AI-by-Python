@@ -25,5 +25,6 @@ print(df.groupby(df["diem_giua_ky"].isna())["diem_cuoi_ky"].agg(["count", "mean"
 print("\ntong_thoi_luong_phut bằng 99999:", (df["tong_thoi_luong_phut"] == 99999).sum())
 print("so_lan_dang_nhap âm            :", (df["so_lan_dang_nhap"] < 0).sum())
 print("nop_tre_tb_gio trên 100 giờ    :", (df["nop_tre_tb_gio"] > 100).sum())
-print("Mười giá trị nộp muộn lớn nhất :",
-      sorted(df["nop_tre_tb_gio"].nlargest(10).tolist()))
+# Mười giá trị nộp muộn lớn nhất, xếp tăng dần
+muon = sorted(df["nop_tre_tb_gio"].nlargest(10).tolist())
+print("Nộp muộn:", *muon)

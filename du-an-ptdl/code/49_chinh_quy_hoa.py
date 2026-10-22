@@ -85,7 +85,8 @@ def bo_chuan_hoa_z(tien, X_tr, X_te, y_tr, y_te) -> None:
         tho = Pipeline([("tien", tien_xu_ly_tho()),
                         ("mo_hinh", LogisticRegression(max_iter=1000))]).fit(X_tr, y_tr)
         for w in ghi:
-            print("  [%s] %s" % (w.category.__name__, str(w.message).splitlines()[0]))
+            print("  [%s]" % w.category.__name__)
+            print("  %s" % str(w.message).splitlines()[0])
     print("  số vòng lặp: thang gốc %d | đã chuẩn hóa z %d"
           % (tho.named_steps["mo_hinh"].n_iter_[0],
              chuan.named_steps["mo_hinh"].n_iter_[0]))
